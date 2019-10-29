@@ -3,6 +3,8 @@ apply plugin: 'java'
 
 apply plugin: 'application'
 
+apply plugin: 'jacoco'
+
 repositories {
     jcenter()
 }
@@ -17,3 +19,14 @@ mainClassName = 'ohtuesimerkki.Main'
 run {
     standardInput = System.in
 }
+
+
+
+jacoco {
+    toolVersion = "0.8.4"
+    reportsDir = file("$buildDir/jacocoReport")
+}
+
+
+
+
