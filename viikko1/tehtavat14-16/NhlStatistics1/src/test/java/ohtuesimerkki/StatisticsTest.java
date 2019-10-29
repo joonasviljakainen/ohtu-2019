@@ -19,8 +19,8 @@ public class StatisticsTest {
         public List<Player> getPlayers() {
             ArrayList<Player> players = new ArrayList<>();
  
-            players.add(new Player("Semenko", "EDM", 4, 12));
-            players.add(new Player("Lemieux", "PIT", 45, 54));
+            players.add(new Player("Crenellini", "SAI", 4, 12));
+            players.add(new Player("Fortificare", "HEL", 45, 54));
             players.add(new Player("Kurri",   "EDM", 37, 53));
             players.add(new Player("Yzerman", "DET", 42, 56));
             players.add(new Player("Gretzky", "EDM", 35, 89));
@@ -40,7 +40,7 @@ public class StatisticsTest {
         List<Player> team = stats.team("ALA");
         assertEquals(1, team.size());
         team = stats.team("EDM");
-        assertEquals(3, team.size());
+        assertEquals(2, team.size());
     }
 
     @Test
