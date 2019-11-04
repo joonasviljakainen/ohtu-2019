@@ -1,4 +1,4 @@
-packate ohtu;
+package ohtu;
 
 public class Multiplier {
 	private int vlaue;
