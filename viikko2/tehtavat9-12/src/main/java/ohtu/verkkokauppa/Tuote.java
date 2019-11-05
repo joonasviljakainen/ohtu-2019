@@ -1,7 +1,7 @@
 
 package ohtu.verkkokauppa;
 
-public class Tuote {
+public class Tuote implements TuoteInterface {
     private int id;
     private String nimi;
     private int hinta;
