@@ -1,5 +1,8 @@
 package ohtu;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
 import ohtu.verkkokauppa.Kauppa;
 import ohtu.verkkokauppa.Kirjanpito;
 import ohtu.verkkokauppa.Pankki;
@@ -9,6 +12,7 @@ import ohtu.verkkokauppa.Viitegeneraattori;
 public class Main {
 
     public static void main(String[] args) {
+        ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
 
         Viitegeneraattori viitegen = new Viitegeneraattori();
         Kirjanpito kirjanpito=  new Kirjanpito();
