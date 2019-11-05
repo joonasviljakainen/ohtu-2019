@@ -1,10 +1,18 @@
 package ohtu.verkkokauppa;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+@Component
 public class Kauppa {
 
+    @Autowired
     private VarastoInterface varasto;
+    @Autowired
     private BankInterface pankki;
+    @Autowired
     private Ostoskori ostoskori;
+    @Autowired
     private ReferenceGeneratorInterface viitegeneraattori;
     private String kaupanTili;
 
