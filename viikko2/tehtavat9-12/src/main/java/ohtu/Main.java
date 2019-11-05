@@ -5,20 +5,14 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 
 import ohtu.verkkokauppa.Kauppa;
 import ohtu.verkkokauppa.Kirjanpito;
-import ohtu.verkkokauppa.Pankki;
-import ohtu.verkkokauppa.Varasto;
-import ohtu.verkkokauppa.Viitegeneraattori;
 
 public class Main {
 
     public static void main(String[] args) {
         ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
 
-        Viitegeneraattori viitegen = context.getBean(Viitegeneraattori.class);// Viitegeneraattori();
-        Kirjanpito kirjanpito =  context.getBean(Kirjanpito.class);//new Kirjanpito();
-        Varasto varasto = context.getBean(Varasto.class);//new Varasto(kirjanpito);
-        Pankki pankki = context.getBean(Pankki.class);//new Pankki(kirjanpito);
-        Kauppa kauppa = new Kauppa(varasto, pankki, viitegen);
+        Kauppa kauppa = context.getBean(Kauppa.class);
+        Kirjanpito kirjanpito =  context.getBean(Kirjanpito.class);
 
         // kauppa hoitaa yhden asiakkaan kerrallaan seuraavaan tapaan:
         kauppa.aloitaAsiointi();
