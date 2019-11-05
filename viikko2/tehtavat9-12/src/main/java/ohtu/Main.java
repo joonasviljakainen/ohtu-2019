@@ -14,10 +14,10 @@ public class Main {
     public static void main(String[] args) {
         ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
 
-        Viitegeneraattori viitegen = new Viitegeneraattori();
-        Kirjanpito kirjanpito=  new Kirjanpito();
-        Varasto varasto = new Varasto(kirjanpito);
-        Pankki pankki = new Pankki(kirjanpito);
+        Viitegeneraattori viitegen = context.getBean(Viitegeneraattori.class);// Viitegeneraattori();
+        Kirjanpito kirjanpito =  context.getBean(Kirjanpito.class);//new Kirjanpito();
+        Varasto varasto = context.getBean(Varasto.class);//new Varasto(kirjanpito);
+        Pankki pankki = context.getBean(Pankki.class);//new Pankki(kirjanpito);
         Kauppa kauppa = new Kauppa(varasto, pankki, viitegen);
 
         // kauppa hoitaa yhden asiakkaan kerrallaan seuraavaan tapaan:
