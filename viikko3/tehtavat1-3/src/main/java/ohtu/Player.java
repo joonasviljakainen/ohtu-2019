@@ -60,7 +60,7 @@ public class Player implements Comparable<Player> {
 
     @Override
     public String toString() {
-        return name + " | Team: " + team + " | Goals: " + goals + " | Assists: " + assists + " | Score: " + (assists + goals);
+        return name + "\t | Team: " + team + "\t | Goals: " + goals + "\t | Assists: " + assists + "\t | Score: " + (assists + goals);
     }
 
     @Override
