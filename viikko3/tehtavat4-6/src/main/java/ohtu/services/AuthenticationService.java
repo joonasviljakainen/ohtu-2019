@@ -48,47 +48,42 @@ public class AuthenticationService {
         boolean hasLetters = false;
         boolean hasNumbers = false;
 
-        for (char c: chars) {
-            if (c >= 48 && c <= 57) {
+        //for (char c: chars) {
+            for (int i = 0; i < chars.length; i++) {
+            Character ch = new Character (chars[i]);
+            if (Character.getType(ch) == Character.DECIMAL_DIGIT_NUMBER) {
                 hasNumbers = true;
-            } else if (c > 96 && c < 123) {
+            } else if (Character.getType(ch) == Character.LOWERCASE_LETTER) {
                 hasLetters = true;
             } else {
                 return false;
             }
         }
-        if (hasLetters && hasNumbers) return true;
-        return false;
+        return (hasLetters && hasNumbers);
+    }
+
+    private boolean containsLettersOnly(String input) {
+        char[] chars = input.toCharArray();
+        for (char c: chars) {
+            Character ch = new Character (c);
+            if (!(Character.getType(ch) == Character.LOWERCASE_LETTER)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private boolean usernameIsValid(String username) {
         if (username.length() < USERNAME_MINIMUM_LENGTH) return false;
-        return containsLettersAndNumbers(username);
+        return containsLettersOnly(username);
     }
 
     private boolean passwordIsValid(String password) {
         if (password.length() < PASSWORD_MINIMUM_LENGTH) return false;
-        //return containsLettersAndNumbers(password);
-        char[] chars = password.toCharArray();
-        boolean hasLetters = false;
-        boolean hasNumbers = false;
-
-        for (char c: chars) {
-            if (c >= 48 && c <= 57) {
-                hasNumbers = true;
-            } else if (c > 96 && c < 123) {
-                hasLetters = true;
-            } else {
-                return false;
-            }
-        }
-        if (hasLetters && hasNumbers) return true;
-        return false;
-        
+        return containsLettersAndNumbers(password);
     }
 
     private boolean invalid(String username, String password) {
-        // validity check of username and password
-        return !usernameIsValid(username) && !passwordIsValid(password);
+        return (!usernameIsValid(username) || !passwordIsValid(password));
     }
 }

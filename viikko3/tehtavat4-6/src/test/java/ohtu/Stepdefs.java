@@ -36,13 +36,8 @@ public class Stepdefs {
     }
 
     @Given("user {string} with password {string} is created")
-    public void userWithPasswordIsCreated(String string, String string2) {
-        // Write code here that turns the phrase above into concrete actions
-        try {
-            commandNewSelected();
-        } catch (Throwable t) {
-            
-        }
+    public void userWithPasswordIsCreated(String string, String string2) throws Throwable{
+        commandNewSelected();
         usernameAndPasswordAreEntered(string, string2);
     }
 
@@ -60,7 +55,9 @@ public class Stepdefs {
     
     @Then("system will respond with {string}")
     public void systemWillRespondWith(String expectedOutput) {
+        System.out.println("TT :" + io.getPrints());
         assertTrue(io.getPrints().contains(expectedOutput));
+        System.out.println("TT :" + io.getPrints());
     }    
 
 }

@@ -7,7 +7,7 @@ Feature: A new user account can be created if a proper unused username and passw
 
     Scenario: creation fails when trying to register with a username that has been taken and a valid password
         Given command new is selected
-        When username "pekka" and password "puota" are entered
+        When username "pekka" and password "puot777a" are entered
         Then system will respond with "new user not registered"
 
     Scenario: Registration fails when username is too short and password is valid
@@ -20,6 +20,7 @@ Feature: A new user account can be created if a proper unused username and passw
         When username "sergei" and password "passwo4" are entered
         Then system will respond with "new user not registered"
 
+    @problem
     Scenario: Creation when username is valid and password is long enough but only contains characters
         Given command new is selected
         When username "rauno" and password "repomies" are entered
