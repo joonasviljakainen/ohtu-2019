@@ -39,6 +39,7 @@ public class Tester {
 
         // LOGIN with invalid credentials
         driver.get("http://localhost:4567");
+        sleep(1);
         System.out.println(driver.getPageSource());
         element = driver.findElement(By.linkText("login"));
         element.click();

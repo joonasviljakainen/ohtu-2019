@@ -6,13 +6,11 @@ import io.cucumber.java.en.When;
 import io.cucumber.java.en.Then;
 import static org.junit.Assert.*;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 
 public class Stepdefs {
-    //WebDriver driver = new ChromeDriver();
     WebDriver driver = new HtmlUnitDriver();
     String baseUrl = "http://localhost:4567";
     
@@ -54,10 +52,48 @@ public class Stepdefs {
     public void usernameAndPasswordAreGiven(String username, String password) throws Throwable {
         logInWith(username, password);
     }   
+    @When("a valid username {string} and password {string} and matching password confirmation are entered")
+    public void usernameAndPasswordAreGivenWithConfirmation(String username, String password) throws Throwable {
+        signUpWith(username, password);
+    }   
+
+    @When("invalid usename {string} and password {string} and matching password confirmation are entered")
+    public void invalidUsernameAndValidPasswordAreGivenWithConfirmation(String username, String password) throws Throwable {
+        signUpWith(username, password);
+    }   
+
+    @When("a valid username {string} and short password {string} and matching password confirmation are entered")
+    public void validUsernameAndShortPasswordAreGivenWithConfirmation(String username, String password) throws Throwable {
+        signUpWith(username, password);
+    }   
+
+    @When("a valid username {string} and valid password {string} and non-matching password {string} are entered")
+    public void aValidUsernameAndValidPasswordAndNonMatchingPasswordAreEntered(String username, String password, String confirmation) {
+        signUpWith(username, password, confirmation);
+    }
+
     
     @Then("system will respond {string}")
     public void systemWillRespond(String pageContent) throws Throwable {
         assertTrue(driver.getPageSource().contains(pageContent));
+    }
+
+    @Given("command new user is selected")
+    public void commandNewUserIsSelected() {
+        driver.get(baseUrl);
+        WebElement element = driver.findElement(By.linkText("register new user"));       
+        element.click();   
+    }
+
+    @Then("user is not created and error {string} is reported")
+    public void userIsNotCreatedAndErrorIsReported(String content) {
+        pageHasContent(content);
+    }
+
+
+    @Then("a new user is created")
+    public void newUserIsCreated() {
+        pageHasContent("Welcome to Ohtu Application!");
     }
     
     @After
@@ -80,4 +116,29 @@ public class Stepdefs {
         element = driver.findElement(By.name("login"));
         element.submit();  
     } 
+
+    private void signUpWith(String username, String password) {
+        assertTrue(driver.getPageSource().contains("Create username and give password"));
+        WebElement element = driver.findElement(By.name("username"));
+        element.sendKeys(username);
+        element = driver.findElement(By.name("password"));
+        element.sendKeys(password);
+        element = driver.findElement(By.name("passwordConfirmation"));
+        element.sendKeys(password);
+        element = driver.findElement(By.name("signup"));
+        element.submit();  
+    }
+
+
+    private void signUpWith(String username, String password, String confirmation) {
+        assertTrue(driver.getPageSource().contains("Create username and give password"));
+        WebElement element = driver.findElement(By.name("username"));
+        element.sendKeys(username);
+        element = driver.findElement(By.name("password"));
+        element.sendKeys(password);
+        element = driver.findElement(By.name("passwordConfirmation"));
+        element.sendKeys(confirmation);
+        element = driver.findElement(By.name("signup"));
+        element.submit();  
+    }
 }
