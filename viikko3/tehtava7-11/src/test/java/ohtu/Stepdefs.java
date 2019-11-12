@@ -41,6 +41,23 @@ public class Stepdefs {
         logInWith(username, password);
     }
 
+    @When("non-existing username {string} and password {string} are given")
+    public void incorrectUsernameAndPasswordAreGiven(String username, String password) {
+        logInWith(username, password);
+    }
+
+    @Given("user with username {string} and password {string} is tried to be created")
+    public void userWithUsernameAndPasswordIsTriedToBeCreated(String username, String password) {
+        commandNewUserIsSelected();
+        signUpWith(username, password);
+    }
+
+    @Given("user with username {string} with password {string} is successfully created")
+    public void userWithUsernameWithPasswordIsSuccessfullyCreated(String username, String password) {
+        commandNewUserIsSelected();
+        signUpWith(username, password);
+    }
+
     
     @Then("user is not logged in and error message is given")
     public void userIsNotLoggedInAndErrorMessageIsGiven() {
