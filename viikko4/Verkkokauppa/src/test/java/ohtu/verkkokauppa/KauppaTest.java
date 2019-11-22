@@ -151,4 +151,22 @@ public class KauppaTest {
 
         verify(viite, times(2)).uusi();
     }
+
+    @Test
+    public void poistetaanKorista() {
+        when(viite.uusi()).thenReturn(125);
+        when(varasto.saldo(1)).thenReturn(10); 
+        when(varasto.saldo(2)).thenReturn(10); 
+        when(varasto.haeTuote(1)).thenReturn(new Tuote(1, "maito", 6));
+        when(varasto.haeTuote(2)).thenReturn(new Tuote(2, "pulla", 5));
+
+        Kauppa k = new Kauppa(varasto, pankki, viite);              
+        k.aloitaAsiointi();
+        k.lisaaKoriin(1);     
+        k.lisaaKoriin(2);  
+        k.poistaKorista(1);   
+        k.tilimaksu("Kalmo", "99755");
+        verify(pankki).tilisiirto("Kalmo", 125, "99755", "33333-44455", 5);   
+
+    }
 }
