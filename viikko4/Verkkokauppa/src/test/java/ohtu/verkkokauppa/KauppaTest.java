@@ -128,4 +128,27 @@ public class KauppaTest {
         
         verify(pankki).tilisiirto("Selma", 667, "09871234", "33333-44455", 5);   
     }
+
+    @Test
+    public void kysyyAinauudenViitenumeron() {
+        when(viite.uusi()).thenReturn(667);
+        when(varasto.saldo(1)).thenReturn(10); 
+        when(varasto.saldo(2)).thenReturn(10); 
+        when(varasto.haeTuote(1)).thenReturn(new Tuote(1, "maito", 6));
+        when(varasto.haeTuote(2)).thenReturn(new Tuote(2, "pulla", 5));
+
+        Kauppa k = new Kauppa(varasto, pankki, viite);              
+        k.aloitaAsiointi();
+        k.lisaaKoriin(1);  
+        k.tilimaksu("Valma", "0000000");
+        verify(pankki).tilisiirto("Valma", 667, "0000000", "33333-44455", 6);   
+
+        when(viite.uusi()).thenReturn(888);
+        k.aloitaAsiointi();   
+        k.lisaaKoriin(2);     
+        k.tilimaksu("Kulma", "55555");
+        verify(pankki).tilisiirto("Kulma", 888, "55555", "33333-44455", 5);   
+
+        verify(viite, times(2)).uusi();
+    }
 }
