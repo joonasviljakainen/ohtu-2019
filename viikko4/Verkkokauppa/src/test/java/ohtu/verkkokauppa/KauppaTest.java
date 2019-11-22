@@ -80,7 +80,6 @@ public class KauppaTest {
     public void kahdenSamanTuotteenJalkeenOikeanParametrit() {
         when(viite.uusi()).thenReturn(345);
         when(varasto.saldo(1)).thenReturn(10); 
-        when(varasto.saldo(2)).thenReturn(10); 
         when(varasto.haeTuote(1)).thenReturn(new Tuote(1, "pulla", 12));
 
         Kauppa k = new Kauppa(varasto, pankki, viite);              
@@ -91,6 +90,24 @@ public class KauppaTest {
         k.tilimaksu("Seppo", "99999");
         
         verify(pankki).tilisiirto("Seppo", 345, "99999", "33333-44455", 2 * 12);   
+    }
+
+    @Test
+    public void kunLisataanTuoteJotaEiOleEiLaskuteta() {
+        when(viite.uusi()).thenReturn(223);
+        when(varasto.saldo(1)).thenReturn(10); 
+        when(varasto.saldo(2)).thenReturn(0); 
+        when(varasto.haeTuote(1)).thenReturn(new Tuote(1, "maito", 6));
+        when(varasto.haeTuote(2)).thenReturn(new Tuote(2, "pulla", 12));
+
+        Kauppa k = new Kauppa(varasto, pankki, viite);              
+        k.aloitaAsiointi();
+        k.lisaaKoriin(1);     
+        k.lisaaKoriin(2);     
+
+        k.tilimaksu("Vilma", "0145567");
+        
+        verify(pankki).tilisiirto("Vilma", 223, "0145567", "33333-44455", 6);   
     }
 }
 
