@@ -7,16 +7,22 @@ import static org.mockito.Mockito.*;
 
 public class KauppaTest {
 
+    Pankki pankki;
+    Viitegeneraattori viite;
+    Varasto varasto;
+
+    @Before
+    public void setUp() {
+        pankki = mock(Pankki.class);
+        viite = mock(Viitegeneraattori.class);
+        varasto = mock(Varasto.class);
+    }
+
     @Test
     public void ostoksenPaaytyttyaPankinMetodiaTilisiirtoKutsutaan() {
-        // luodaan ensin mock-oliot
-        Pankki pankki = mock(Pankki.class);
-
-        Viitegeneraattori viite = mock(Viitegeneraattori.class);
         // määritellään että viitegeneraattori palauttaa viitten 42
         when(viite.uusi()).thenReturn(42);
 
-        Varasto varasto = mock(Varasto.class);
         // määritellään että tuote numero 1 on maito jonka hinta on 5 ja saldo 10
         when(varasto.saldo(1)).thenReturn(10); 
         when(varasto.haeTuote(1)).thenReturn(new Tuote(1, "maito", 5));
@@ -37,12 +43,9 @@ public class KauppaTest {
 
     @Test
     public void ostoksenPaatyttyaKivastiKutsutaanOikeillaParametreilla() {
-        Pankki pankki = mock(Pankki.class);
-
-        Viitegeneraattori viite = mock(Viitegeneraattori.class);
+    
         when(viite.uusi()).thenReturn(42);
 
-        Varasto varasto = mock(Varasto.class);
         when(varasto.saldo(1)).thenReturn(10); 
         when(varasto.haeTuote(1)).thenReturn(new Tuote(1, "maito", 5));
 
@@ -57,26 +60,37 @@ public class KauppaTest {
 
     @Test
     public void useidenOstostenKanssaKutsutaanOikein() {
-        Pankki pankki = mock(Pankki.class);
-
-        Viitegeneraattori viite = mock(Viitegeneraattori.class);
         when(viite.uusi()).thenReturn(66);
-
-        Varasto varasto = mock(Varasto.class);
         when(varasto.saldo(1)).thenReturn(10); 
+        when(varasto.saldo(2)).thenReturn(10); 
         when(varasto.haeTuote(1)).thenReturn(new Tuote(1, "maito", 5));
-
+        when(varasto.haeTuote(2)).thenReturn(new Tuote(2, "pulla", 12));
+        
         Kauppa k = new Kauppa(varasto, pankki, viite);              
 
         k.aloitaAsiointi();
         k.lisaaKoriin(1);     
-
-        when(varasto.haeTuote(1)).thenReturn(new Tuote(1, "pulla", 12));
-        k.lisaaKoriin(1);     
-
+        k.lisaaKoriin(2);     
         k.tilimaksu("harri", "54321");
         
         verify(pankki).tilisiirto("harri", 66, "54321", "33333-44455", 5 + 12);   
+    }
+    
+    @Test
+    public void kahdenSamanTuotteenJalkeenOikeanParametrit() {
+        when(viite.uusi()).thenReturn(345);
+        when(varasto.saldo(1)).thenReturn(10); 
+        when(varasto.saldo(2)).thenReturn(10); 
+        when(varasto.haeTuote(1)).thenReturn(new Tuote(1, "pulla", 12));
+
+        Kauppa k = new Kauppa(varasto, pankki, viite);              
+        k.aloitaAsiointi();
+        k.lisaaKoriin(1);     
+        k.lisaaKoriin(1);     
+
+        k.tilimaksu("Seppo", "99999");
+        
+        verify(pankki).tilisiirto("Seppo", 345, "99999", "33333-44455", 2 * 12);   
     }
 }
 
