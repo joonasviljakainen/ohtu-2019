@@ -109,5 +109,23 @@ public class KauppaTest {
         
         verify(pankki).tilisiirto("Vilma", 223, "0145567", "33333-44455", 6);   
     }
-}
 
+    @Test
+    public void aloitaAsiointiNollaaOstoksenTiedot() {
+        when(viite.uusi()).thenReturn(667);
+        when(varasto.saldo(1)).thenReturn(10); 
+        when(varasto.saldo(2)).thenReturn(10); 
+        when(varasto.haeTuote(1)).thenReturn(new Tuote(1, "maito", 6));
+        when(varasto.haeTuote(2)).thenReturn(new Tuote(2, "pulla", 5));
+
+        Kauppa k = new Kauppa(varasto, pankki, viite);              
+        k.aloitaAsiointi();
+        k.lisaaKoriin(1);  
+        k.aloitaAsiointi();   
+        k.lisaaKoriin(2);     
+
+        k.tilimaksu("Selma", "09871234");
+        
+        verify(pankki).tilisiirto("Selma", 667, "09871234", "33333-44455", 5);   
+    }
+}
