@@ -1,6 +1,8 @@
 
 package ohtu.intjoukkosovellus;
 
+import java.security.InvalidParameterException;
+
 public class IntJoukko {
 
     public final static int OLETUS_KOKO = 5; // aloitustalukon koko
@@ -21,7 +23,7 @@ public class IntJoukko {
 
     public IntJoukko(int koko) {
         if (koko < 0) {
-            return;
+            throw new InvalidParameterException("Koko ei voi olla negatiivinen!");
         }
         lukujono = new int[koko];
         alusta();
@@ -30,10 +32,10 @@ public class IntJoukko {
     
     public IntJoukko(int koko, int kasvatuskoko) {
         if (koko < 0) {
-            throw new IndexOutOfBoundsException("Kapasitteetti väärin");//heitin vaan jotain :D
+            throw new InvalidParameterException("Koko ei voi olla negatiivinen!");
         }
-        if (kasvatuskoko < 0) {
-            throw new IndexOutOfBoundsException("kapasiteetti2");//heitin vaan jotain :D
+        if (kasvatuskoko <= 0) {
+            throw new InvalidParameterException("Kasvatuskoon on oltava suurempi kuin 0!");//heitin vaan jotain :D
         }
         lukujono = new int[koko];
         alusta();
@@ -69,8 +71,7 @@ public class IntJoukko {
 
     public boolean poista(int luku) {
         
-        int i;
-        for (i = 0; i < alkioidenLkm; i++) {
+        for (int i = 0; i < alkioidenLkm; i++) {
             if (luku == lukujono[i]) {
                 lukujono[i] = 0;
                 siirraKohtiAlkua(i);   
@@ -91,7 +92,6 @@ public class IntJoukko {
         for (int i = 0; i < vanha.length; i++) {
             uusi[i] = vanha[i];
         }
-
     }
 
     public int mahtavuus() {
