@@ -1,5 +1,7 @@
 package ohtu;
 
+import java.security.InvalidParameterException;
+
 public class TennisGame {
     
     private int m_score1 = 0;
@@ -15,8 +17,10 @@ public class TennisGame {
     public void wonPoint(String playerName) {
         if (playerName == this.player1Name) {
             m_score1 += 1;
-        } else {
+        } else if (playerName == this.player2Name) {
             m_score2 += 1;
+        } else {
+            throw new InvalidParameterException("No player by name " + playerName);
         }
     }
 
