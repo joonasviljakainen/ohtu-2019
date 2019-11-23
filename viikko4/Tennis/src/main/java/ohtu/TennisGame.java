@@ -39,20 +39,28 @@ public class TennisGame {
         }
     }
 
+    public String getUnequalScore() {
+        int difference = player1Score - player2Score;
+        
+        if (difference == 1) {
+             return "Advantage player1";
+        } else if (difference == -1) {
+            return "Advantage player2";
+        } else if (difference >= 2) { 
+            return "Win for player1"; 
+        } else {
+            return "Win for player2";
+        }
+    }
+
     public String getScore() {
         String score = "";
         int tempScore = 0;
         
         if (player1Score == player2Score) {
             return getEqualScore();    
-        } else if (player1Score>=4 || player2Score>=4) {
-
-            int minusResult = player1Score - player2Score;
-            if (minusResult==1) return "Advantage player1";
-            else if (minusResult ==-1) return "Advantage player2";
-            else if (minusResult>=2) return "Win for player1";
-            else return "Win for player2";
-
+        } else if (player1Score >= 4 || player2Score >= 4) {
+            return getUnequalScore();
         } else {
 
             for (int i = 1; i < 3; i++) {
