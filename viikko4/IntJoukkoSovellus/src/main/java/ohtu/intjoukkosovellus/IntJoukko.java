@@ -45,13 +45,17 @@ public class IntJoukko {
             lukujono[alkioidenLkm] = luku;
             alkioidenLkm++;
             if (alkioidenLkm >= lukujono.length) {
-                int[] uusiTaulukko = new int[alkioidenLkm + kasvatuskoko];
-                kopioiTaulukko(lukujono, uusiTaulukko);
-                lukujono = uusiTaulukko;
+                kasvataTaulukkoa();
             }
             return true;
         }
         return false;
+    }
+
+    public void kasvataTaulukkoa () {
+        int[] uusiTaulukko = new int[alkioidenLkm + kasvatuskoko];        
+        kopioiTaulukko(lukujono, uusiTaulukko);        
+        lukujono = uusiTaulukko;
     }
 
     public boolean kuuluu(int luku) {
@@ -61,31 +65,26 @@ public class IntJoukko {
             }
         }    
         return false;
-        
     }
 
     public boolean poista(int luku) {
-        int kohta = -1;
-        int apu;
-        for (int i = 0; i < alkioidenLkm; i++) {
+        
+        int i;
+        for (i = 0; i < alkioidenLkm; i++) {
             if (luku == lukujono[i]) {
-                kohta = i; //siis luku löytyy tuosta kohdasta :D
-                lukujono[kohta] = 0;
-                break;
+                lukujono[i] = 0;
+                siirraKohtiAlkua(i);   
+                return true;
             }
         }
-        if (kohta != -1) {
-            for (int j = kohta; j < alkioidenLkm - 1; j++) {
-                apu = lukujono[j];
-                lukujono[j] = lukujono[j + 1];
-                lukujono[j + 1] = apu;
-            }
-            alkioidenLkm--;
-            return true;
-        }
-
-
         return false;
+    }
+
+    public void siirraKohtiAlkua(int alkaen) {
+        for (int j = alkaen; j < alkioidenLkm - 1; j++) {
+            lukujono[j] = lukujono[j + 1];
+        }
+        alkioidenLkm--;
     }
 
     private void kopioiTaulukko(int[] vanha, int[] uusi) {
@@ -102,20 +101,15 @@ public class IntJoukko {
 
     @Override
     public String toString() {
-        if (alkioidenLkm == 0) {
-            return "{}";
-        } else if (alkioidenLkm == 1) {
-            return "{" + lukujono[0] + "}";
-        } else {
-            String tuotos = "{";
-            for (int i = 0; i < alkioidenLkm - 1; i++) {
-                tuotos += lukujono[i];
-                tuotos += ", ";
+        String joukkoMerkkijonona = "{";
+        for (int i = 0; i < alkioidenLkm; i++) {
+            joukkoMerkkijonona += lukujono[i];
+            if (i != alkioidenLkm - 1){
+                joukkoMerkkijonona += ", ";
             }
-            tuotos += lukujono[alkioidenLkm - 1];
-            tuotos += "}";
-            return tuotos;
         }
+        joukkoMerkkijonona = joukkoMerkkijonona + "}";
+        return joukkoMerkkijonona;
     }
 
     public int[] toIntArray() {
