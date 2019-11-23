@@ -70,7 +70,6 @@ public class TennisGame {
     }
 
     public String getScore() {
-        
         if (player1Score == player2Score) {
             return getEqualScore();    
         } else if (player1Score >= 4 || player2Score >= 4) {
