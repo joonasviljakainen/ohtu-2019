@@ -24,7 +24,7 @@ public class TennisGame {
         }
     }
 
-    public String getEqualScore() {
+    public String getEvenScore() {
         if (player1Score <= 3) {
             return getSingleScore(player1Score) + "-All";
         } else {
@@ -65,17 +65,19 @@ public class TennisGame {
         }   
     }
 
-    public String getRegularScore() {
-        return getSingleScore(player1Score) + "-" + getSingleScore(player2Score);
+    public String getUnevenScore() {
+        if (player1Score >= 4 || player2Score >= 4) {
+            return getAdvantageScore();
+        } else {
+            return getSingleScore(player1Score) + "-" + getSingleScore(player2Score);
+        }
     }
 
     public String getScore() {
         if (player1Score == player2Score) {
-            return getEqualScore();    
-        } else if (player1Score >= 4 || player2Score >= 4) {
-            return getAdvantageScore();
+            return getEvenScore();    
         } else {
-            return getRegularScore();
+            return getUnevenScore();
         }
     }
 }
