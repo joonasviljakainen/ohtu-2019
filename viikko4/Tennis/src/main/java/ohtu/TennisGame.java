@@ -25,25 +25,18 @@ public class TennisGame {
     }
 
     public String getEqualScore() {
-        switch (player1Score) {
-            case 0:
-                return "Love-All";
-            case 1:
-                return "Fifteen-All";
-            case 2:
-                return "Thirty-All";
-            case 3:
-                return "Forty-All";
-            default:
-                return "Deuce";
+        if (player1Score <= 3) {
+            return getSingleScore(player1Score) + "-All";
+        } else {
+            return "Deuce";
         }
     }
 
-    public String getUnequalScore() {
+    public String getAdvantageScore() {
         int difference = player1Score - player2Score;
         
         if (difference == 1) {
-             return "Advantage player1";
+            return "Advantage player1";
         } else if (difference == -1) {
             return "Advantage player2";
         } else if (difference >= 2) { 
@@ -53,41 +46,37 @@ public class TennisGame {
         }
     }
 
+    public String getSingleScore(int score) {
+        if (score >= 0 && score <= 3) {
+            switch(score) {
+                case 0:
+                    return "Love";
+                case 1:
+                    return "Fifteen";
+                case 2:
+                    return "Thirty";
+                case 3:
+                    return "Forty";
+                default: 
+                    return null;
+            }
+        } else {
+            throw new IllegalArgumentException("Score must be between 0 and 3!");
+        }   
+    }
+
+    public String getRegularScore() {
+        return getSingleScore(player1Score) + "-" + getSingleScore(player2Score);
+    }
+
     public String getScore() {
-        String score = "";
-        int tempScore = 0;
         
         if (player1Score == player2Score) {
             return getEqualScore();    
         } else if (player1Score >= 4 || player2Score >= 4) {
-            return getUnequalScore();
+            return getAdvantageScore();
         } else {
-
-            for (int i = 1; i < 3; i++) {
-                if (i == 1) {
-                    tempScore = player1Score;
-                }
-                else { 
-                    score += "-"; 
-                    tempScore = player2Score;
-                }
-                switch(tempScore) {
-                    case 0:
-                        score+="Love";
-                        break;
-                    case 1:
-                        score+="Fifteen";
-                        break;
-                    case 2:
-                        score+="Thirty";
-                        break;
-                    case 3:
-                        score+="Forty";
-                        break;
-                }
-            }
-
+            return getRegularScore();
         }
-        return score;
     }
 }
