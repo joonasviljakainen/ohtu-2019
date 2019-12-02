@@ -5,6 +5,8 @@ import javax.swing.JTextField;
 
 public class Summa extends Komento {
 
+    int value;
+
     public Summa(JTextField tulos, JTextField syote) {
         super(tulos, syote);
     }
@@ -13,8 +15,16 @@ public class Summa extends Komento {
     public void suorita() {
         int a = Integer.parseInt(tulos.getText());
         int b = Integer.parseInt(syote.getText());
-        this.tulos.setText(String.valueOf(a + b));
 
+        value = a;
+        this.tulos.setText(String.valueOf(a + b));
+    }
+
+    @Override
+    public void peru() {
+        int a = Integer.parseInt(tulos.getText());
+        this.tulos.setText(String.valueOf(a - value));
+        this.syote.setText(String.valueOf(value));
     }
 
 }

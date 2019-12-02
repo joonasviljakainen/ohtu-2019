@@ -43,7 +43,7 @@ public class Tapahtumankuuntelija implements ActionListener {
             komento.suorita();
             edellinen = komento;
         } else {
-            //edellinen.peru();
+            edellinen.peru();
             edellinen = null;
         }                  
     }

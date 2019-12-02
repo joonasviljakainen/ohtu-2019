@@ -46,8 +46,7 @@ public class GraafinenLaskin implements Runnable {
         miinus.addActionListener(kasittelija);
         nollaa.addActionListener(kasittelija);
         undo.addActionListener(kasittelija);
-        //nollaa.setEnabled(false);
-        undo.setEnabled(false);
+        
         JPanel paneli = new JPanel(new GridLayout(1, 4));
         paneli.add(plus);
         paneli.add(miinus);
