@@ -9,16 +9,12 @@ public class QueryBuilder {
 
     public QueryBuilder () {
         this.matchers = new ArrayList<>();
-        this.matchers.add(new All());
     }
 
     public QueryBuilder all() {
+        this.matchers.add(new All());
         return this;
     }
-
-    /*public QueryBuilder and() {
-        return this;
-    }*/
 
     public QueryBuilder hasAtLeast(int value, String category) {
         matchers.add(new HasAtLeast(value, category));
@@ -30,13 +26,10 @@ public class QueryBuilder {
         return this;
     }
 
-    /*public QueryBuilder not() {
+    public QueryBuilder oneOf(Matcher... matchers) {
+        this.matchers.add(new Or(matchers));
         return this;
-    }*/
-
-    /*public QueryBuilder or() {
-        return this;
-    }*/
+    }
 
     public QueryBuilder playsIn(String team) {
         matchers.add(new PlaysIn(team));
@@ -44,11 +37,14 @@ public class QueryBuilder {
     }
 
     public Matcher build() {
+        if (matchers.size() == 0) {
+            this.all();
+        }
         Matcher[] matcherArray = new Matcher[matchers.size()];
         for (int i = 0; i < matchers.size(); i++) {
             matcherArray[i] = matchers.get(i);
         }
-        //Matcher[] matcherArray = (Matcher[]) matchers.toArray();//ay().toArray(matchers);
+        matchers.clear();
         return new And(matcherArray);
     }
 }

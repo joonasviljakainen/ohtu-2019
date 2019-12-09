@@ -13,7 +13,7 @@ public class Main {
 
         Statistics stats = new Statistics(new PlayerReaderImpl(url));
 
-        Matcher m = new And(new HasAtLeast(5, "goals"), new HasAtLeast(5, "assists"), new PlaysIn("PHI"));
+        /*Matcher m = new And(new HasAtLeast(5, "goals"), new HasAtLeast(5, "assists"), new PlaysIn("PHI"));
         printPlayers(stats.matches(m));
 
         Matcher b = new All();
@@ -47,7 +47,18 @@ public class Main {
 
         QueryBuilder query2 = new QueryBuilder();
         Matcher queryBuilder2 = query2.playsIn("NYR").hasAtLeast(5, "goals").hasFewerThan(10, "goals").build();
-        printPlayers(stats.matches((queryBuilder2)));
+        printPlayers(stats.matches((queryBuilder2)));*/
+
+        // OR queries
+
+        System.out.println("OR QUERIES");
+
+        QueryBuilder orQuery2 = new QueryBuilder();
+        Matcher orQueryMatcher2 = orQuery2
+                .oneOf(orQuery2.playsIn("PHI").hasAtLeast(10, "assists").hasFewerThan(8, "goals").build(),
+                orQuery2.playsIn("EDM").hasAtLeast(20, "points").build())
+                .build();
+        printPlayers(stats.matches(orQueryMatcher2));
     }
 
     public static void printPlayers(List<Player> matches) {
