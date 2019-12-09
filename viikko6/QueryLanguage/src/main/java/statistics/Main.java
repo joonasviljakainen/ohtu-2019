@@ -39,6 +39,15 @@ public class Main {
                 new Or(new PlaysIn("NYR"), new PlaysIn("NYI"), new PlaysIn("NJD")));
         printPlayers(stats.matches(or2));
 
+        // Testing QueryBuilder
+
+        QueryBuilder query = new QueryBuilder();
+        Matcher queryBuilder = query.playsIn("NYR").build();
+        printPlayers(stats.matches((queryBuilder)));
+
+        QueryBuilder query2 = new QueryBuilder();
+        Matcher queryBuilder2 = query2.playsIn("NYR").hasAtLeast(5, "goals").hasFewerThan(10, "goals").build();
+        printPlayers(stats.matches((queryBuilder2)));
     }
 
     public static void printPlayers(List<Player> matches) {
