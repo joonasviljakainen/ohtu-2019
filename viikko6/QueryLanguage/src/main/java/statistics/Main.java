@@ -33,6 +33,12 @@ public class Main {
         Matcher m3 = new And(new HasFewerThan(1, "goals"), new PlaysIn("NYR"));
         printPlayers(stats.matches(m3));
 
+        Matcher or = new Or(new HasAtLeast(20, "goals"), new HasAtLeast(20, "assists"));
+        printPlayers(stats.matches(or));
+        Matcher or2 = new And(new HasAtLeast(20, "points"),
+                new Or(new PlaysIn("NYR"), new PlaysIn("NYI"), new PlaysIn("NJD")));
+        printPlayers(stats.matches(or2));
+
     }
 
     public static void printPlayers(List<Player> matches) {
