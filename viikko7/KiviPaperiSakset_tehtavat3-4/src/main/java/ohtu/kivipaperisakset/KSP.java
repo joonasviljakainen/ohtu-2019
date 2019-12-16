@@ -4,7 +4,11 @@ import java.util.Scanner;
 
 public abstract class KSP implements Peli {
 
-    private static final Scanner scanner = new Scanner(System.in);
+    
+    private Scanner scanner;
+    protected KSP(Scanner scanner) {
+        this.scanner = scanner;
+    }
 
     @Override
     public void pelaa() {
@@ -44,6 +48,10 @@ public abstract class KSP implements Peli {
     protected abstract String haeSeuraava();
 
     protected abstract void asetaSiirto(String siirto);
+
+    protected Scanner getScanner() {
+        return this.scanner;
+    }
 
     private static boolean onkoOkSiirto(String siirto) {
         return "k".equals(siirto) || "p".equals(siirto) || "s".equals(siirto);

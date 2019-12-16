@@ -1,11 +1,12 @@
 package ohtu.kivipaperisakset;
 
+import java.util.Scanner;
 
 public class KPSTekoaly extends KSP {
     Tekoaly tekoaly;
 
-    public KPSTekoaly () {
-        super();
+    public KPSTekoaly (Scanner scanner) {
+        super(scanner);
         tekoaly = new Tekoaly();
     }
 

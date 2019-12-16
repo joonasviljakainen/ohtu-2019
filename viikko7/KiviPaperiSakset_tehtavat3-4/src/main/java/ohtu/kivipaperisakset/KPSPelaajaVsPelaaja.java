@@ -4,15 +4,13 @@ import java.util.Scanner;
 
 public class KPSPelaajaVsPelaaja extends KSP {
 
-    private static final Scanner scanner = new Scanner(System.in);
-
-    public KPSPelaajaVsPelaaja() {
-        super();
+    public KPSPelaajaVsPelaaja(Scanner scanner) {
+        super(scanner);
     }
 
     @Override
     public String haeSeuraava() {
-        return scanner.nextLine();
+        return super.getScanner().nextLine();
     }
 
     @Override

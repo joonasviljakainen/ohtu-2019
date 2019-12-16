@@ -1,5 +1,6 @@
 package ohtu.kivipaperisakset;
 
+import java.util.Scanner;
 
 // Kivi-Paperi-Sakset, jossa voidaan valita pelataanko vastustajaa
 // vastaan vai ei
@@ -7,8 +8,8 @@ public class KPSParempiTekoaly extends KSP {
 
     TekoalyParannettu tekoaly;
 
-    public KPSParempiTekoaly(int muistinKoko) {
-        super();
+    public KPSParempiTekoaly(Scanner scanner, int muistinKoko) {
+        super(scanner);
         tekoaly = new TekoalyParannettu(muistinKoko);
     }
 
