@@ -23,5 +23,8 @@ public class KPSParempiTekoaly extends KSP {
         tekoaly.asetaSiirto(siirto);
     }
 
+    public static Peli luoKPSParempiTekoalyPeli(Scanner scanner, int muistinKoko) {
+        return new KPSParempiTekoaly(scanner, muistinKoko);
+    }
 
 }

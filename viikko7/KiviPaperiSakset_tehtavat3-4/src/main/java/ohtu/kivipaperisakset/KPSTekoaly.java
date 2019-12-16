@@ -19,4 +19,8 @@ public class KPSTekoaly extends KSP {
     protected void asetaSiirto(String siirto) {
         tekoaly.asetaSiirto(siirto);
     }
+
+    public static Peli luoKPSTekoalyPeli(Scanner scanner) {
+        return new KPSTekoaly(scanner);
+    }
 }

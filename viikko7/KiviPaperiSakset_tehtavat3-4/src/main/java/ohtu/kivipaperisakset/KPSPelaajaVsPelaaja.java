@@ -17,4 +17,9 @@ public class KPSPelaajaVsPelaaja extends KSP {
     public void asetaSiirto(String siirto) {
 
     }
+
+    public static Peli luoKPSPelaajaVSPelaaja(Scanner scanner) {
+        return new KPSPelaajaVsPelaaja(scanner);
+    }
+
 }
